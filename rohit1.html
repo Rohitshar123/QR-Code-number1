@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>QR Code with Name & Number</title>
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      background: #f0f0f0;
+      padding: 50px;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    input {
+      padding: 10px;
+      width: 250px;
+      margin: 10px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background: #28a745;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    #qr-box {
+      margin-top: 20px;
+      background: white;
+      padding: 20px;
+      display: inline-block;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>QR Code (Name + Number)</h1>
+
+  <input type="text" id="name" placeholder="Enter Name" value="Rohit">
+  <br>
+  <input type="text" id="number" placeholder="Enter Number" value="7340392796">
+  <br>
+
+  <button onclick="generateQR()">Generate QR</button>
+
+  <div id="qr-box">
+    <img id="qr" src="">
+  </div>
+
+  <script>
+    function generateQR() {
+      let name = document.getElementById("name").value;
+      let number = document.getElementById("number").value;
+
+      // vCard format (contact QR)
+      let data = `BEGIN:VCARD
+VERSION:3.0
+FN:${name}
+TEL:${number}
+END:VCARD`;
+
+      let url = "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=" + encodeURIComponent(data);
+
+      document.getElementById("qr").src = url;
+    }
+
+    // auto load
+    window.onload = generateQR;
+  </script>
+
+</body>
+</html>
